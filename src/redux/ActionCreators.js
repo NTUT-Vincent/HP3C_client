@@ -7,10 +7,8 @@ export const fetchProducts = () => (dispatch) => {
     return fetch(baseUrl + 'api/product/')
     .then(response => {
         if (response.ok) {
-            console.log('ok');
           return response;
         } else {
-            console.log('not ok');
           var error = new Error('Error ' + response.status + ': ' + response.statusText);
           error.response = response;
           throw error;

@@ -24,17 +24,23 @@ class Main extends Component {
 
     componentDidMount(){
         this.props.fetchProducts();
-        console.log("componentDidMount")
     }
 
     render(){
+        const productsByType = ({match})=>{
+            return(
+                <Product products={this.props.products.products.filter((product) => product.type.toLowerCase() === match.params.productType.toLowerCase())} productType={match}/>
+            );
+        };
+
         return (
             <div>
                 <Header/>
                 <TransitionGroup>
                     <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
                     <Switch location={this.props.location}>
-                        <Route path='/product' component={()=><Product products={this.props.products}/>} />
+                        <Route exact path='/product/' component={()=><Product products={this.props.products.products}/>} />
+                        <Route path='/product/:productType' component={productsByType} />
                     </Switch>
                     </CSSTransition>
                 </TransitionGroup>

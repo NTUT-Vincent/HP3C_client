@@ -28,8 +28,22 @@ address{
   color:#0f0f0f;
 }
 
-.navbar-dark {
+.navbar{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.navbar-dark{
   background-color: #494949;
+}
+
+.navbar-dark-option{
+  background-color: #494949;
+  height: 100%;
+}
+
+.navbar-dark-option:hover {
+  background-color: rgb(172, 76, 250);
 }
 
 .page-enter {

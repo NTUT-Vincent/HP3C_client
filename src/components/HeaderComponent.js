@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron, Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Input, Label, 
+    UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 class Header extends Component {
@@ -44,16 +45,38 @@ class Header extends Component {
                     <NavbarBrand className="mr-auto" href="/"><img src='assets/images/logo.png' height="30" width="41"/></NavbarBrand>
                     <Collapse isOpen={this.state.isNavOpen} navbar>
                         <Nav className="mr-auto" navbar>
-                            <NavItem>
-                                <NavLink className="nav-link"  to='/'><span className="fa fa-home fa-lg"></span> Products</NavLink>
+                            <UncontrolledDropdown nav inNavbar>
+                                <DropdownToggle nav caret>
+                                    Product Types
+                                </DropdownToggle>
+                                <DropdownMenu right className="navbar-dark">
+                                    <DropdownItem className="navbar-dark-option">
+                                        <NavLink className="nav-link" to="/product/cpu" >CPU</NavLink>
+                                    </DropdownItem>
+                                    <DropdownItem className="navbar-dark-option">
+                                        <NavLink className="nav-link" to="/product/gpu">GPU</NavLink>
+                                    </DropdownItem>
+                                    <DropdownItem className="navbar-dark-option">
+                                        <NavLink className="nav-link" to="/product/ram">RAM</NavLink>
+                                    </DropdownItem>
+                                    <DropdownItem className="navbar-dark-option">
+                                        <NavLink className="nav-link" to="/product/ssd">SSD</NavLink>
+                                    </DropdownItem>
+                                    <DropdownItem className="navbar-dark-option">
+                                        <NavLink className="nav-link" to="/product/motherboard">motherboard</NavLink>
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                            <NavItem className="navbar-dark-option">
+                                <NavLink className="nav-link"  to='/product/'><span className="fa fa-home fa-lg"></span> Products</NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="navbar-dark-option">
                                 <NavLink className="nav-link" to='/'><span className="fa fa-info fa-lg"></span> Promotions</NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="navbar-dark-option">
                                 <NavLink className="nav-link"  to='/'><span className="fa fa-list fa-lg"></span> Menu</NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="navbar-dark-option">
                                 <NavLink className="nav-link" to='/'><span className="fa fa-address-card fa-lg"></span> Contact Us</NavLink>
                             </NavItem>
                         </Nav>
