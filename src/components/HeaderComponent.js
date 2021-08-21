@@ -118,64 +118,69 @@ class Header extends Component {
     }
 
     render() {
-        console.log('header state user: ', this.state);
-        console.log('header state user: ', this.props.userInfo);
         return(
         <React.Fragment>
             <Navbar dark expand="md">
                 <div className="container">
                     <NavbarToggler onClick={this.toggleNav} />
-                    <NavbarBrand className="mr-auto" href="/"><img src='assets/images/logo.png' height="30" width="41"/></NavbarBrand>
+                    <NavbarBrand className="mr-auto" href="/">HP3C</NavbarBrand>
                     <Collapse isOpen={this.state.isNavOpen} navbar>
-                        <Nav className="mr-auto" navbar>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    Product Types
-                                </DropdownToggle>
-                                <DropdownMenu right className="navbar-dark">
-                                    <DropdownItem className="navbar-dark-option">
-                                        <NavLink className="nav-link" to="/product/cpu" >CPU</NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem className="navbar-dark-option">
-                                        <NavLink className="nav-link" to="/product/gpu">GPU</NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem className="navbar-dark-option">
-                                        <NavLink className="nav-link" to="/product/ram">RAM</NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem className="navbar-dark-option">
-                                        <NavLink className="nav-link" to="/product/ssd">SSD</NavLink>
-                                    </DropdownItem>
-                                    <DropdownItem className="navbar-dark-option">
-                                        <NavLink className="nav-link" to="/product/motherboard">motherboard</NavLink>
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                            <NavItem className="navbar-dark-option">
-                                <NavLink className="nav-link"  to='/product/'><span className="fa fa-home fa-lg"></span> Products</NavLink>
-                            </NavItem>
-                            <NavItem className="navbar-dark-option">
-                                <NavLink className="nav-link" to='/'><span className="fa fa-info fa-lg"></span> Promotions</NavLink>
-                            </NavItem>
-                            <NavItem className="navbar-dark-option">
-                                <NavLink className="nav-link"  to='/'><span className="fa fa-list fa-lg"></span> Menu</NavLink>
-                            </NavItem>
-                            <NavItem className="navbar-dark-option">
-                                <NavLink className="nav-link" to='/'><span className="fa fa-address-card fa-lg"></span> Contact Us</NavLink>
-                            </NavItem>
-                            <NavItem className="navbar-dark-option">
-                                {this.renderShoppingCartTab()}
-                            </NavItem>
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    User Option
-                                </DropdownToggle>
-                                <DropdownMenu right className="navbar-dark">
-                                    {this.renderUserOptionColumns()}
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
-                        </Nav>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-sm-8 col-md-10">
+                                    <Nav className="mr-auto" navbar>
+                                        <UncontrolledDropdown nav inNavbar>
+                                            <DropdownToggle nav caret>
+                                                Product Types
+                                            </DropdownToggle>
+                                            <DropdownMenu right className="navbar-dark">
+                                                <DropdownItem className="navbar-dark-option">
+                                                    <NavLink className="nav-link" to="/product/cpu" >CPU</NavLink>
+                                                </DropdownItem>
+                                                <DropdownItem className="navbar-dark-option">
+                                                    <NavLink className="nav-link" to="/product/gpu">GPU</NavLink>
+                                                </DropdownItem>
+                                                <DropdownItem className="navbar-dark-option">
+                                                    <NavLink className="nav-link" to="/product/ram">RAM</NavLink>
+                                                </DropdownItem>
+                                                <DropdownItem className="navbar-dark-option">
+                                                    <NavLink className="nav-link" to="/product/ssd">SSD</NavLink>
+                                                </DropdownItem>
+                                                <DropdownItem className="navbar-dark-option">
+                                                    <NavLink className="nav-link" to="/product/motherboard">motherboard</NavLink>
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </UncontrolledDropdown>
+                                        <NavItem className="navbar-dark-option">
+                                            <NavLink className="nav-link"  to='/product/'><span className="fa fa-home fa-lg"></span> Products</NavLink>
+                                        </NavItem>
+                                        <NavItem className="navbar-dark-option">
+                                            <NavLink className="nav-link" to='/'><span className="fa fa-info fa-lg"></span> Promotions</NavLink>
+                                        </NavItem>
+                                        <NavItem className="navbar-dark-option">
+                                            <NavLink className="nav-link" to='/'><span className="fa fa-address-card fa-lg"></span> Contact Us</NavLink>
+                                        </NavItem>
+                                        <NavItem className="navbar-dark-option">
+                                            {this.renderShoppingCartTab()}
+                                        </NavItem>
+                                        <UncontrolledDropdown nav inNavbar>
+                                            <DropdownToggle nav caret>
+                                                User Option
+                                            </DropdownToggle>
+                                            <DropdownMenu right className="navbar-dark">
+                                                {this.renderUserOptionColumns()}
+                                            </DropdownMenu>
+                                        </UncontrolledDropdown>
+                                    </Nav>
+                                </div>
+                                <div className="col-2">
+                                    <div></div>
+                                    {this.renderLoginOrLogoutButton()}
+                                </div>
+                            </div>
+                        </div>
                     </Collapse>  
-                    {this.renderLoginOrLogoutButton()}
+                    
                 </div>
             </Navbar>
             <Jumbotron>

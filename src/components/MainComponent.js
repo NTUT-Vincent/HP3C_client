@@ -30,6 +30,7 @@ class Main extends Component {
 
         this.addUserInfo = this.addUserInfo.bind(this);
         this.addProductToShoppingCart = this.addProductToShoppingCart.bind(this);
+        this.deleteProductFromShoppingKart = this.deleteProductFromShoppingKart.bind(this);
     }
 
     componentDidMount(){
@@ -45,6 +46,23 @@ class Main extends Component {
     addProductToShoppingCart(product){
         const currentList = [...this.state.shoppingCartList];
         currentList.push(product);
+        this.setState({
+            shoppingCartList: currentList
+        });
+    }
+
+    deleteProductFromShoppingKart(product){
+        const currentList = [...this.state.shoppingCartList];
+        let index = -1;
+        let i;
+        for(i = 0; i < currentList.length; i++){
+            if(currentList[i].type_id === product.type_id){
+                index = i;
+            }
+        }
+        if(index != -1){
+            currentList.splice(index, 1)
+        }
         this.setState({
             shoppingCartList: currentList
         });
@@ -70,7 +88,10 @@ class Main extends Component {
                         <Route exact path='/product/' component={()=><Product products={this.props.products.products} addProductToShoppingCart={this.addProductToShoppingCart}/>} />
                         <Route path='/product/:productType' component={productsByType} />
                         <Route path='/userProfile' component={()=><UserProfile userInfo={this.state.userInfo}/>} />
-                        <Route path='/shoppingCart' component={()=><ShoppingCart userInfo={this.state.userInfo} products={this.state.shoppingCartList}/>} />
+                        <Route path='/shoppingCart' component={()=><ShoppingCart userInfo={this.state.userInfo} 
+                            products={this.state.shoppingCartList} 
+                            addProductToShoppingCart={this.addProductToShoppingCart} 
+                            deleteProductFromShoppingKart={this.deleteProductFromShoppingKart}/>} />
                     </Switch>
                     </CSSTransition>
                 </TransitionGroup>
