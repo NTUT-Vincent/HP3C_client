@@ -26,14 +26,13 @@ class Product extends Component{
                     <CardTitle tag="h5">{productItem.type_id}</CardTitle>
                     <CardSubtitle tag="h6" className="mb-2 text-muted"></CardSubtitle>
                     <CardText>{'NT.' + productItem.price.toString()}</CardText>
-                    <Button>Add to cart</Button>
+                    <Button onClick={()=>{this.props.addProductToShoppingCart(productItem)}}>Add to cart</Button>
                 </CardBody>
             </Card>
         );
     }
 
     render() {
-
         const products = this.props.products.map((product)=>{
             return(
                 <div key={product.type_id} className="col-12 col-md-5 m-1">

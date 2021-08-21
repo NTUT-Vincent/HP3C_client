@@ -76,6 +76,20 @@ class Header extends Component {
         );
     }
 
+    renderShoppingCartTab(){
+        return(
+            <div>
+                <NavItem className="navbar-dark-option">
+                {
+                    this.state.logged 
+                    ? <NavLink className="nav-link"  to='/shoppingCart'>Shopping Cart</NavLink>
+                    : <div></div>
+                }
+                </NavItem>
+            </div>
+        );
+    }
+
     validateUserLogin(username, password){
         fetch(baseUrl + 'api/user/login/' + username + '/' + password + '/')
         .then(response => {
@@ -147,6 +161,9 @@ class Header extends Component {
                             </NavItem>
                             <NavItem className="navbar-dark-option">
                                 <NavLink className="nav-link" to='/'><span className="fa fa-address-card fa-lg"></span> Contact Us</NavLink>
+                            </NavItem>
+                            <NavItem className="navbar-dark-option">
+                                {this.renderShoppingCartTab()}
                             </NavItem>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>

@@ -7,6 +7,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Header from './HeaderComponent';
 import Product from './ProductComponent';
 import UserProfile from './UserProfileComponent';
+import ShoppingCart from './ShoppingCartComponent';
 
 const mapStateToProps = state => {
     return {
@@ -23,10 +24,12 @@ class Main extends Component {
         super(props);
 
         this.state = {
-            userInfo:{}
+            userInfo:{},
+            shoppingCartList:[]
         }
 
         this.addUserInfo = this.addUserInfo.bind(this);
+        this.addProductToShoppingCart = this.addProductToShoppingCart.bind(this);
     }
 
     componentDidMount(){
@@ -39,10 +42,22 @@ class Main extends Component {
         });
     }
 
+    addProductToShoppingCart(product){
+        const currentList = [...this.state.shoppingCartList];
+        currentList.push(product);
+        this.setState({
+            shoppingCartList: currentList
+        });
+    }
+
     render(){
+        console.log(this.state)
+
         const productsByType = ({match})=>{
             return(
-                <Product products={this.props.products.products.filter((product) => product.type.toLowerCase() === match.params.productType.toLowerCase())} productType={match}/>
+                <Product products={this.props.products.products.filter((product) => product.type.toLowerCase() === match.params.productType.toLowerCase())} 
+                productType={match}
+                addProductToShoppingCart={this.addProductToShoppingCart}/>
             );
         };
 
@@ -52,9 +67,10 @@ class Main extends Component {
                 <TransitionGroup>
                     <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
                     <Switch location={this.props.location}>
-                        <Route exact path='/product/' component={()=><Product products={this.props.products.products}/>} />
+                        <Route exact path='/product/' component={()=><Product products={this.props.products.products} addProductToShoppingCart={this.addProductToShoppingCart}/>} />
                         <Route path='/product/:productType' component={productsByType} />
                         <Route path='/userProfile' component={()=><UserProfile userInfo={this.state.userInfo}/>} />
+                        <Route path='/shoppingCart' component={()=><ShoppingCart userInfo={this.state.userInfo} products={this.state.shoppingCartList}/>} />
                     </Switch>
                     </CSSTransition>
                 </TransitionGroup>
