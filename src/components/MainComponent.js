@@ -6,6 +6,7 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import Header from './HeaderComponent';
 import Product from './ProductComponent';
+import UserProfile from './UserProfileComponent';
 
 const mapStateToProps = state => {
     return {
@@ -20,10 +21,22 @@ const mapStateToProps = state => {
 class Main extends Component {
     constructor(props){
         super(props);
+
+        this.state = {
+            userInfo:{}
+        }
+
+        this.addUserInfo = this.addUserInfo.bind(this);
     }
 
     componentDidMount(){
         this.props.fetchProducts();
+    }
+
+    addUserInfo(user){
+        this.setState({
+            userInfo: user
+        });
     }
 
     render(){
@@ -35,12 +48,13 @@ class Main extends Component {
 
         return (
             <div>
-                <Header/>
+                <Header addUserInfo={this.addUserInfo} userInfo={this.state.userInfo}/>
                 <TransitionGroup>
                     <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
                     <Switch location={this.props.location}>
                         <Route exact path='/product/' component={()=><Product products={this.props.products.products}/>} />
                         <Route path='/product/:productType' component={productsByType} />
+                        <Route path='/userProfile' component={()=><UserProfile userInfo={this.state.userInfo}/>} />
                     </Switch>
                     </CSSTransition>
                 </TransitionGroup>

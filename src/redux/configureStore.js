@@ -1,5 +1,6 @@
 import {createStore, combineReducers, applyMiddleware } from 'redux';
 import { Products } from './products';
+import { UserInfo } from './userInfo';
 // import { Comments } from './comments';
 // import { Promotions } from './promotions';
 // import { Leaders } from './leaders';
@@ -11,7 +12,8 @@ import logger from 'redux-logger';
 export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
-            products: Products
+            products: Products,
+            userInfo: UserInfo
             }
         ),
         applyMiddleware(thunk, logger)

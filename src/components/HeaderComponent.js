@@ -3,6 +3,8 @@ import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron, 
     UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
+import { baseUrl } from '../shared/baseUrl';
+
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -10,12 +12,16 @@ class Header extends Component {
         this.toggleNav = this.toggleNav.bind(this);
         this.toggleModal = this.toggleModal.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
         
         this.state = {
             isNavOpen: false,
-            isModalOpen: false
+            isModalOpen: false,
+            logged: false,
+            userType: ''
         };
     }
+
 
     toggleNav() {
         this.setState({
@@ -31,12 +37,75 @@ class Header extends Component {
 
     handleLogin(event) {
         this.toggleModal();
-        alert("Username: " + this.username.value + " Password: " + this.password.value
-            + " Remember: " + this.remember.checked);
+        // alert("Username: " + this.username.value + " Password: " + this.password.value
+        //     + " Remember: " + this.remember.checked);
+        this.validateUserLogin(this.username.value, this.password.value)
         event.preventDefault();
     }
 
+    handleLogout(event) {
+        this.setState({
+            logged: false
+        });
+        this.props.addUserInfo({});
+        event.preventDefault();
+    }
+
+    renderUserOptionColumns(){
+        return(
+            <div>
+                <DropdownItem className="navbar-dark-option">
+                    <NavLink className="nav-link" to="/userProfile" >User Profile</NavLink>
+                </DropdownItem>
+                <DropdownItem className="navbar-dark-option">
+                    <NavLink className="nav-link" to="/product/gpu">Order</NavLink>
+                </DropdownItem>
+            </div>
+        );
+    }
+
+    renderLoginOrLogoutButton(){
+        return(
+            <div>
+                {
+                    this.state.logged 
+                    ? <Button outline onClick={this.handleLogout}><span className="fa fa-sign-in fa-lg"></span> Logout</Button>
+                    : <Button outline onClick={this.toggleModal}><span className="fa fa-sign-in fa-lg"></span> Login</Button>
+                }
+            </div>
+        );
+    }
+
+    validateUserLogin(username, password){
+        fetch(baseUrl + 'api/user/login/' + username + '/' + password + '/')
+        .then(response => {
+            if (response.ok) {
+              return response;
+            } else {
+              var error = new Error('Error ' + response.status + ': ' + response.statusText);
+              error.response = response;
+              throw error;
+            }
+          },
+          error => {
+                var errmess = new Error(error.message);
+                throw errmess;
+          })
+        .then(response => response.json())
+        .then(response => {   
+            console.log(response);
+            this.props.addUserInfo(response);
+            this.setState({
+                logged: true,
+                userType: response.user_type
+            });
+        })
+        .catch(error =>  { console.log('get comment', error.message); alert('This page has not been construsted\nError: '+error.message); })
+    }
+
     render() {
+        console.log('header state user: ', this.state);
+        console.log('header state user: ', this.props.userInfo);
         return(
         <React.Fragment>
             <Navbar dark expand="md">
@@ -79,14 +148,17 @@ class Header extends Component {
                             <NavItem className="navbar-dark-option">
                                 <NavLink className="nav-link" to='/'><span className="fa fa-address-card fa-lg"></span> Contact Us</NavLink>
                             </NavItem>
+                            <UncontrolledDropdown nav inNavbar>
+                                <DropdownToggle nav caret>
+                                    User Option
+                                </DropdownToggle>
+                                <DropdownMenu right className="navbar-dark">
+                                    {this.renderUserOptionColumns()}
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
                         </Nav>
-                        {/* <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <Button outline onClick={this.toggleModal}><span className="fa fa-sign-in fa-lg"></span> Login</Button>
-                            </NavItem>
-                        </Nav> */}
-                    </Collapse>
-                    <Button outline onClick={this.toggleModal}><span className="fa fa-sign-in fa-lg"></span> Login</Button>
+                    </Collapse>  
+                    {this.renderLoginOrLogoutButton()}
                 </div>
             </Navbar>
             <Jumbotron>
