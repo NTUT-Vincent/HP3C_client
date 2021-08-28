@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { ListGroup, ListGroupItem, Button, Alert } from 'reactstrap';
+
+import { baseUrl } from '../shared/baseUrl';
 class ShoppingCart extends Component{
     constructor(props){
         super(props);
@@ -17,7 +19,7 @@ class ShoppingCart extends Component{
         this.props.deleteProductFromShoppingKart(product);
     }
 
-    renderShoppingCartItems(products){
+    countItemAndRetrunMap(){
         let mapOfShoppingCartItems = new Map();
         this.props.products.forEach((product)=>{
             if(mapOfShoppingCartItems.has(product.type_id)){
@@ -27,6 +29,11 @@ class ShoppingCart extends Component{
                 mapOfShoppingCartItems.set(product.type_id, 1)
             }
         })
+        return mapOfShoppingCartItems
+    }
+
+    renderShoppingCartItems(products){
+        let mapOfShoppingCartItems = this.countItemAndRetrunMap();
         let renderItemArray = []
         for (const [key, value] of mapOfShoppingCartItems) {
             renderItemArray.push(
@@ -59,6 +66,7 @@ class ShoppingCart extends Component{
 
         const shoppingCartList = this.renderShoppingCartItems(this.props.products)
 
+        console.log(this.state)
         return(
             <div className="container">
                 <div className="row">
@@ -67,7 +75,7 @@ class ShoppingCart extends Component{
                             {shoppingCartList}
                         </ListGroup>
                     </div>
-                    <div className="col-12 col-md-6"/>
+                    <div className="col-12 col-md-3"/>
                     <div className="col-12 col-md-6">
                         <Alert color="light">
                             <h3>
@@ -75,10 +83,59 @@ class ShoppingCart extends Component{
                             </h3>
                         </Alert>
                     </div>
+                    <div className="col-12 col-md-3 shoppingCartSubmitButton">
+                        <Button color="success" onClick={()=>{this.postProductsInCart()}}>Buy It!</Button>
+                    </div>
                 </div>
             </div>
         );
     }
+
+    postProductsInCart(){
+        let itemMap = this.countItemAndRetrunMap();
+        let itemArray = [];
+        for (const [key, value] of itemMap){
+            itemArray.push({
+                type_id: key,
+                quantity: value
+            })
+        }
+
+        const requestBody = {
+            order_customer: this.props.userInfo.user_id,
+            address: this.props.userInfo.address,
+            payment: "credit card",
+            deliver_type: "Home delivery",
+            status: "to be handled",
+            items: itemArray
+        }
+
+        return fetch(baseUrl + 'api/transaction/order_post/', {
+            method: "POST",
+            body: JSON.stringify(requestBody),
+            headers: {
+              "Content-Type": "application/json"
+            },
+            credentials: "same-origin"
+        })
+        .then(response => {
+            if (response.ok) {
+              return response;
+            } else {
+              var error = new Error('Error ' + response.status + ': ' + response.statusText);
+              error.response = response;
+              throw error;
+            }
+          },
+          error => {
+                throw error;
+          })
+        .then(response => response.json())
+        .catch(error =>  { console.log('post order', error.message); alert('Your order could not be posted\nError: '+error.message); });
+    }
+
+    
+
 }
 
 export default ShoppingCart;

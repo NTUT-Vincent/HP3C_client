@@ -91,7 +91,8 @@ class Main extends Component {
                         <Route path='/shoppingCart' component={()=><ShoppingCart userInfo={this.state.userInfo} 
                             products={this.state.shoppingCartList} 
                             addProductToShoppingCart={this.addProductToShoppingCart} 
-                            deleteProductFromShoppingKart={this.deleteProductFromShoppingKart}/>} />
+                            deleteProductFromShoppingKart={this.deleteProductFromShoppingKart}
+                            userInfo={this.state.userInfo}/>} />
                     </Switch>
                     </CSSTransition>
                 </TransitionGroup>

@@ -71,3 +71,7 @@ address{
 .shoppingCartTable {
   margin-top: 10px;
 }
+
+.shoppingCartSubmitButton {
+  margin-top: 20px;
+}
