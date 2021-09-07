@@ -58,7 +58,7 @@ class Header extends Component {
                     <NavLink className="nav-link" to="/userProfile" >User Profile</NavLink>
                 </DropdownItem>
                 <DropdownItem className="navbar-dark-option">
-                    <NavLink className="nav-link" to="/product/gpu">Order</NavLink>
+                    <NavLink className="nav-link" to="/orderHistory">Order</NavLink>
                 </DropdownItem>
             </div>
         );

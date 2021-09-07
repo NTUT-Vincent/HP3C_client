@@ -8,6 +8,7 @@ import Header from './HeaderComponent';
 import Product from './ProductComponent';
 import UserProfile from './UserProfileComponent';
 import ShoppingCart from './ShoppingCartComponent';
+import OrderHistory from './OrderHistoryComponent';
 
 const mapStateToProps = state => {
     return {
@@ -93,6 +94,7 @@ class Main extends Component {
                             addProductToShoppingCart={this.addProductToShoppingCart} 
                             deleteProductFromShoppingKart={this.deleteProductFromShoppingKart}
                             userInfo={this.state.userInfo}/>} />
+                        <Route path='/OrderHistory' component={()=><OrderHistory userInfo={this.state.userInfo}/>} />
                     </Switch>
                     </CSSTransition>
                 </TransitionGroup>

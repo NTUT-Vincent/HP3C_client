@@ -65,8 +65,6 @@ class ShoppingCart extends Component{
         })
 
         const shoppingCartList = this.renderShoppingCartItems(this.props.products)
-
-        console.log(this.state)
         return(
             <div className="container">
                 <div className="row">
